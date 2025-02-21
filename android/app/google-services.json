@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "799354674612",
+    "project_id": "bite-guide-1d626",
+    "storage_bucket": "bite-guide-1d626.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799354674612:android:8569d974c1718f103da6e1",
+        "android_client_info": {
+          "package_name": "com.raul364.BiteGuide_FE"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799354674612-485igna9lv5np7qc8nu0p08ev0p4qf35.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raul364.BiteGuide_FE",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "799354674612-8ees3a9up1s82lkdqnnkjkua5v4d08q1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCea7OovMgGlgxP_cPjmFJ-24rNKM9HvmI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799354674612-8ees3a9up1s82lkdqnnkjkua5v4d08q1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
