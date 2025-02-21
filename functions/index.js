@@ -1,14 +1,14 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
+require('dotenv').config()
 
 admin.initializeApp();
-
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "officialraul364@gmail.com",
-    pass: "abvd apof iylc wczs",
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
   },
 });
 
@@ -17,7 +17,7 @@ exports.sendEmailOTP = functions.https.onRequest(async (req, res) => {
     const { email, otp } = req.body;
 
     const mailOptions = {
-      from: "officialraul364@gmail.com",
+      from: process.env.EMAIL,
       to: email,
       subject: "Your OTP Code",
       text: `Your OTP is: ${otp}. It expires in 5 minutes.`,
