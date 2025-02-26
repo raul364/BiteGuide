@@ -19,7 +19,7 @@
       },
       "googleServicesFile": "./android/app/google-services.json",
       "package": "com.raul364.BiteGuide_FE"
-    }, 
+    },
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -40,7 +40,8 @@
         }
       ],
       "expo-localization",
-      "expo-build-properties"
+      "expo-build-properties",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
