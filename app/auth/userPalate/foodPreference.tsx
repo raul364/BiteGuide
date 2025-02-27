@@ -64,7 +64,7 @@ function FoodPreference() {
           },
         }
       );
-      router.replace("/home");
+      router.replace("/(tabs)"); // Redirect to home page
     } catch (error: any) {
       console.error(
         "Error saving preferences:",
