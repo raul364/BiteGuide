@@ -38,9 +38,6 @@ export default function RegisterScreen() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(getDefaultCountry());
   const [searchQuery, setSearchQuery] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState(getDefaultCountry());
-  const [searchQuery, setSearchQuery] = useState("");
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -167,8 +164,6 @@ export default function RegisterScreen() {
     } else {
       form.phone = pn.number.e164;
       errors.push("Invalid phone number.");
-    } else {
-      form.phone = pn.number.e164;
     }
     
     return errors;
@@ -248,7 +243,6 @@ export default function RegisterScreen() {
         {/* Country Picker */}
         <TouchableOpacity
           style={[styles.countrySelector, { borderColor: colors.border }]}
-          style={[styles.countrySelector, { borderColor: colors.border }]}
           onPress={openCountryPicker}
         >
           <CountryFlag isoCode={selectedCountry.code} size={18} />
@@ -259,15 +253,11 @@ export default function RegisterScreen() {
         {/* Phone Number Input */}
         <TextInput
           placeholder="Phone number"
-          placeholder="Phone number"
           keyboardType="phone-pad"
-          autoComplete="tel"
           autoComplete="tel"
           value={phoneNumber}
           placeholderTextColor={colors.gray}
-          placeholderTextColor={colors.gray}
           onChangeText={setPhoneNumber}
-          style={[styles.phoneNumberInput, { borderColor: colors.border, color: colors.text, ...fonts.regular }]}
           style={[styles.phoneNumberInput, { borderColor: colors.border, color: colors.text, ...fonts.regular }]}
           maxLength={14}
         />
@@ -385,7 +375,6 @@ export default function RegisterScreen() {
         </BottomSheetView>
       </BottomSheetModal>
     </SafeAreaView>
-    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
@@ -408,11 +397,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-
-    borderRadius: 5,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-
   },
   numberContainer: {
     flexDirection: "row",
@@ -421,13 +405,10 @@ const styles = StyleSheet.create({
   },
   dialCode: {marginLeft: 10 },
   input: {  borderWidth: 1, padding: 10, width: "70%", borderRadius: 5, marginBottom: 10  },
-  dialCode: {marginLeft: 10 },
-  input: {  borderWidth: 1, padding: 10, width: "70%", borderRadius: 5, marginBottom: 10  },
   button: { backgroundColor: "#007AFF", padding: 10, borderRadius: 5 },
   buttonText: { color: "#FFF", fontSize: 16 },
   modalContent: { flex: 1, padding: 20, paddingTop: 0 },
   countryItem: { flexDirection: "row", alignItems: "center", padding: 10 },
-  countryText: { marginLeft: 10,},
   countryText: { marginLeft: 10,},
   searchBar: {
     borderWidth: 1,

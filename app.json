@@ -41,7 +41,7 @@
       ],
       "expo-localization",
       "expo-build-properties",
-<<<<<<< HEAD
+
       "expo-font",
       [
         "expo-location",
@@ -49,9 +49,6 @@
             "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
           }
       ]
-=======
-      "expo-font"
->>>>>>> 82f540968cb9d065b29ad61aa4feb21b7c4e0f51
     ],
     "experiments": {
       "typedRoutes": true

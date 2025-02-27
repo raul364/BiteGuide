@@ -63,13 +63,9 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-<<<<<<< HEAD
     "tamagui": "^1.125.12",
     "react-native-maps": "1.18.0",
     "expo-location": "~18.0.7"
-=======
-    "tamagui": "^1.125.12"
->>>>>>> 82f540968cb9d065b29ad61aa4feb21b7c4e0f51
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

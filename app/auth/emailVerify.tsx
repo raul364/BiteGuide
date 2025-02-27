@@ -9,20 +9,8 @@ import {
   SafeAreaView,
   Button,
   ActivityIndicator,
-  ActivityIndicator,
 } from "react-native";
 
-import {
-  doc,
-  setDoc,
-  getDoc,
-  deleteDoc,
-  where,
-  collection,
-  query,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "@/config/firebaseConfig";
 import {
   doc,
   setDoc,
@@ -43,21 +31,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const generateOTP = (): string =>
   Math.floor(100000 + Math.random() * 900000).toString();
-import { useTheme } from "@react-navigation/native";
-import ThemedButton from "@/components/ThemedButton";
-import { ExtendedTheme } from "@/theme/theme";
-import ThemedText from "@/components/ThemedText";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const generateOTP = (): string =>
-  Math.floor(100000 + Math.random() * 900000).toString();
-
-const checkEmailExists = async (email: string): Promise<boolean> => {
-  const usersRef = collection(db, "users");
-  const q = query(usersRef, where("email", "==", email));
-  const querySnapshot = await getDocs(q);
-  return !querySnapshot.empty;
-};
 const checkEmailExists = async (email: string): Promise<boolean> => {
   const usersRef = collection(db, "users");
   const q = query(usersRef, where("email", "==", email));
@@ -68,26 +42,10 @@ const checkEmailExists = async (email: string): Promise<boolean> => {
 export default function EmailVerify() {
   const router = useRouter();
   const { colors, fonts } = useTheme() as ExtendedTheme;
-  const { colors, fonts } = useTheme() as ExtendedTheme;
   const [email, setEmail] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const auth = getAuth();
-
-  const validateEmail = (email: string): boolean => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
-  const validatePassword = (password: string): boolean => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    return regex.test(password);
-  };
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -126,30 +84,9 @@ export default function EmailVerify() {
         return;
       }
 
-      if (!validateEmail(email)) {
-        setError("Please enter a valid email address.");
-        return;
-      }
-      if (!validatePassword(password)) {
-        setError(
-          "Password must be at least 8 characters long and include uppercase, lowercase, a number, and a special character."
-        );
-        return;
-      }
-      // Clear any previous error
-      setError("");
-
-      const emailExists = await checkEmailExists(email);
-      if (emailExists) {
-        setError("Email already exists.");
-        console.error("Email already exists.");
-        return;
-      }
-
       const otpCode = generateOTP();
       setGeneratedOtp(otpCode);
 
-      setOtpSent(true);
       setOtpSent(true);
       // Store OTP in Firestore (expires in 5 minutes)
       const otpRef = doc(db, "otps", email);
@@ -165,7 +102,6 @@ export default function EmailVerify() {
         }
       );
     } catch (error) {
-      console.error("Failed to send OTP.");
       console.error("Failed to send OTP.");
     }
   };
@@ -328,7 +264,7 @@ export default function EmailVerify() {
     </SafeAreaView>
   );
 }
-}
+
 
 const styles = StyleSheet.create({
   container: {
@@ -336,12 +272,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-  },
-  input: {
-    borderWidth: 1,
-    padding: 10,
-    width: "70%",
-    borderRadius: 5,
   },
   input: {
     borderWidth: 1,
