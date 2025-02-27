@@ -101,8 +101,6 @@ export default function EmailVerify() {
           body: JSON.stringify({ email, otp: otpCode }),
         }
       );
-
-      console.log("OTP Sent", "Check your email for the 6-digit code.");
     } catch (error) {
       console.error("Failed to send OTP.");
     }
@@ -122,8 +120,10 @@ export default function EmailVerify() {
       const storedOtp = otpSnapshot.data().otp;
       if (otp === storedOtp) {
         await deleteDoc(otpRef); // Delete OTP after verification
-        await registerUser();
-        router.replace("./register");
+        const registrationSuccess = await registerUser();
+        if (!registrationSuccess) {
+          setError("Registration failed.");
+        }
       } else {
         console.error("Invalid OTP.");
       }
@@ -134,26 +134,27 @@ export default function EmailVerify() {
     }
   };
 
-  const registerUser = async () => {
+  const registerUser = async (): Promise<boolean> => {
     setLoading(true);
     try {
-      await fetch(`${process.env.EXPO_PUBLIC_BACKEND_URL}/users/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      })
-        .then((res) => {
-          if (res.status === 201) {
-            signInWithEmailAndPassword(auth, email, password);
-          } else {
-            throw new Error("OTP sending failed");
-          }
-        })
-        .catch((error) => {
-          console.error("Error signing in:", error);
-        });
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/users/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (response.status === 201) {
+        await signInWithEmailAndPassword(auth, email, password);
+        return true;
+      } else {
+        throw new Error("Registration failed");
+      }
     } catch (error) {
       setError("Could not register user.");
+      return false;
     } finally {
       setLoading(false);
     }
@@ -210,7 +211,7 @@ export default function EmailVerify() {
                   },
                 ]}
               />
-              
+
               <TouchableOpacity onPress={() => router.replace("./login")}>
                 <ThemedText
                   size={14}
@@ -248,11 +249,13 @@ export default function EmailVerify() {
                   },
                 ]}
               />
-              <ThemedButton
-                type="primary"
-                title="Verify OTP"
-                onPress={verifyOTP}
-              />
+              <View style={{ marginTop: 20 }}>
+                <ThemedButton
+                  type="primary"
+                  title="Verify OTP"
+                  onPress={verifyOTP}
+                />
+              </View>
             </>
           )}
         </>

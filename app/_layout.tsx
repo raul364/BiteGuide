@@ -48,16 +48,17 @@ function AppContent() {
         const userDocRef = doc(db, "users", authenticatedUser.uid);
         const userDocSnap = await getDoc(userDocRef);
         const userData = userDocSnap.data();
-
+    
+        
         // Check if the user has fully completed registration
         if (userData && userData.registrationComplete && userData.preferencesComplete) {
-          router.replace("/home");
+          router.replace("/(tabs)"); // Redirect to home page
         } else if (userData && userData.registrationComplete) {
           // Navigate to the registration completion page
-          router.replace("/auth/userPalate/foodPreference");
+          router.push("/auth/userPalate/foodPreference");
         }else {
           // Navigate to the registration completion page
-          router.replace("/auth/register");
+          router.push("/auth/register");
         }
       } else {
         router.replace("/auth/landing"); // Redirect to login page
