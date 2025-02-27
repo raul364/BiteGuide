@@ -10,8 +10,24 @@ import { useFonts } from "expo-font";
 import { LightTheme, DarkTheme } from "../theme/theme";
 import { ThemeProvider } from "@react-navigation/native";
 import { db } from "@/config/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+import { useColorScheme } from "react-native";
+import { useFonts } from "expo-font";
+import { LightTheme, DarkTheme } from "../theme/theme";
+import { ThemeProvider } from "@react-navigation/native";
+import { db } from "@/config/firebaseConfig";
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const [fontsLoaded] = useFonts({
+    "RobotoMono-Regular": require("../assets/fonts/RobotoMono-Regular.ttf"),
+    "RobotoMono-Medium": require("../assets/fonts/RobotoMono-Medium.ttf"),
+    "RobotoMono-Bold": require("../assets/fonts/RobotoMono-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null; // Prevent rendering until fonts are loaded
+  }
   const colorScheme = useColorScheme();
   const [fontsLoaded] = useFonts({
     "RobotoMono-Regular": require("../assets/fonts/RobotoMono-Regular.ttf"),
@@ -31,6 +47,13 @@ export default function RootLayout() {
             </AuthProvider>
           </ThemeProvider>
         </BottomSheetModalProvider>
+        <BottomSheetModalProvider>
+          <ThemeProvider value={colorScheme === "dark" ? DarkTheme : LightTheme}>
+            <AuthProvider>
+              <AppContent />
+            </AuthProvider>
+          </ThemeProvider>
+        </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 }
@@ -40,8 +63,10 @@ function AppContent() {
   const { user, setUser } = useAuth();
   const router = useRouter();
   
+  
 
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (authenticatedUser) => {
     const unsubscribe = onAuthStateChanged(auth, async (authenticatedUser) => {
       setUser(authenticatedUser);
       if (authenticatedUser) {
@@ -66,6 +91,9 @@ function AppContent() {
     });
 
     return () => unsubscribe();
+  }, [auth, router, setUser]);
+
+
   }, [auth, router, setUser]);
 
 
